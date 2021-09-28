@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PersonaldetailsService } from '../personaldetails.service';
 import { Personaldetails } from '../personaldetails';
-import { Router } from '@angular/router';
-
+import { Router,ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-apply',
   templateUrl: './apply.component.html',
@@ -11,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class ApplyComponent implements OnInit {  
   PersonalDetails=new FormGroup({
+
     username:new FormControl("",[Validators.required]),
     FirstName:new FormControl("",[Validators.required]),
     LastName:new FormControl("",[Validators.required]),
@@ -25,9 +25,9 @@ export class ApplyComponent implements OnInit {
     AadharNumber:new FormControl(null,[Validators.required]),
     PanNumber:new FormControl(null,[Validators.required]),
   }
-  //{validators:this.passwordMatchValidator}
+    //{validators:this.passwordMatchValidator}
   );
-  constructor(private service:PersonaldetailsService,private router:Router) { }
+  constructor(private service:PersonaldetailsService,private route:Router) { }
 
   ngOnInit(): void { }
   get username()
@@ -87,8 +87,10 @@ export class ApplyComponent implements OnInit {
     this.service.personaldetails(this.PersonalDetails.value).subscribe(res=>{
       console.log(res)
       console.log("personal details saved!")
+      sessionStorage.setItem('username',this.PersonalDetails.controls.username.value)
+      this.route.navigate(['incomedetails'])
     })
-    this.router.navigateByUrl('')
+    this.route.navigateByUrl('')
 
   }
 }
