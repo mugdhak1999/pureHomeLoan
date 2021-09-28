@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PersonaldetailsService } from '../personaldetails.service';
 import { Personaldetails } from '../personaldetails';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-apply',
@@ -26,7 +27,7 @@ export class ApplyComponent implements OnInit {
   }
   //{validators:this.passwordMatchValidator}
   );
-  constructor(private service:PersonaldetailsService) { }
+  constructor(private service:PersonaldetailsService,private router:Router) { }
 
   ngOnInit(): void { }
   get username()
@@ -81,13 +82,13 @@ export class ApplyComponent implements OnInit {
   }
   submitperdetails()
   {
-    // this.PersonalDetails=this.InsertForm.value
-    console.log("hi");
+    // this.PersonalDetails=this.InsertForm.value    
     console.log(this.PersonalDetails.value)
     this.service.personaldetails(this.PersonalDetails.value).subscribe(res=>{
       console.log(res)
       console.log("personal details saved!")
     })
+    this.router.navigateByUrl('')
 
   }
 }

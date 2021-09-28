@@ -25,6 +25,12 @@ export class PersonaldetailsService {
       catchError(this.errorHandler)
     )
   }
+  userlogin(userlog:any):Observable<Personaldetails>{
+    return this.httpClient.post<Personaldetails>(this.apiServer+'/UserLogin/',JSON.stringify(userlog),this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
   errorHandler(error: { error: { message: string; }; status: any; message: any; }) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {
