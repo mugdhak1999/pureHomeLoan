@@ -4,6 +4,7 @@ import { Personaldetails } from './personaldetails';
 import { ErrorHandler } from '@angular/core';
 import{HttpClient,HttpHeaders,HttpErrorResponse} from "@angular/common/http";
 import{catchError} from 'rxjs/operators';
+import { Admindetails } from './admindetails';
 
 
 @Injectable({
@@ -31,6 +32,13 @@ export class PersonaldetailsService {
       catchError(this.errorHandler)
     )
   }
+  adminlogin(adminlog:any):Observable<Admindetails>{
+    return this.httpClient.post<Admindetails>(this.apiServer+'/AdminDetails/',JSON.stringify(adminlog),this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+  
   errorHandler(error: { error: { message: string; }; status: any; message: any; }) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {

@@ -2,7 +2,7 @@
     <div class="content">
 <div [ngClass]="'style'">
     
-    <form [formGroup]="AdminLogin" >
+    <form [formGroup]="AdminLogin" (ngSubmit)="adminlogin()" novalidate>
         <div class="container" >
           <h1>Welcome Admin!</h1>
           <!-- <p>Please login to know the status of your loan</p> -->
@@ -17,9 +17,9 @@
             <label for="pass" ><b>Password</b></label>
             <input type="text" id="pass" name="pass" formControlName="Password" />
         </p>
-        
+        <p style="color: red;">{{message}}</p>
 
-          <a routerLink="/admin"><button class="registerbtn" type="submit"> Login</button></a>
+          <button class="registerbtn" type="submit"> Login</button>
         </div>
       
         <div class="container signin">
