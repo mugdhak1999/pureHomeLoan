@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DisplayDetails } from '../display-details';
 import { LoanDetails } from '../loan-details';
 import { Personaldetails } from '../personaldetails';
 import { PersonaldetailsService } from '../personaldetails.service';
@@ -59,7 +60,7 @@ export class ApprovalComponent implements OnInit {
   }
   GetLoanData() {
     this.service.GetDetailsByApplicationID(this.router.snapshot.params['appid']).subscribe(data =>
-      this.loanData = new FormGroup({
+      {this.loanData = new FormGroup({
         applicationId: new FormControl(data['applicationId']),
         username: new FormControl(data['username']),
         maxLoanAmountGrantable: new FormControl(data['maxLoanAmountGrantable']),
@@ -68,7 +69,7 @@ export class ApprovalComponent implements OnInit {
         loanAmount: new FormControl(data['loanAmount']),
         
       })
-      
+    }
     )
 
   }

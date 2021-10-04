@@ -8,6 +8,7 @@ import { IncomeDetails } from './income-details';
 import { LoanDetails } from './loan-details';
 import { ApplicationDetails } from './application-details';
 import { Account } from './account';
+import { DisplayDetails } from './display-details';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +17,7 @@ export class PersonaldetailsService {
   userlogin(value: any) {
     throw new Error('Method not implemented.');
   }
-  private apiServer="http://localhost:27614/api";
+  private apiServer="http://localhost:3751/api";
   httpOptions={
     headers: new HttpHeaders({
       'Content-Type':'application/json'
@@ -42,7 +43,7 @@ export class PersonaldetailsService {
       catchError(this.errorHandler)
     )
   }
-  GetLoanDetails():Observable<LoanDetails[]>{return this.httpClient.get<LoanDetails[]>(this.apiServer+'/Pending/display')}
+  GetLoanDetails():Observable<LoanDetails[]>{return this.httpClient.get<LoanDetails[]>(this.apiServer+'/LoanDetails/display')}
 
   loandetails(loandetails:any):Observable<LoanDetails>{
     return this.httpClient.post<LoanDetails>(this.apiServer+'/LoanDetails/',JSON.stringify(loandetails),this.httpOptions)
@@ -54,12 +55,15 @@ export class PersonaldetailsService {
   //    return this.httpClient.get<Account[]>(this.apiServer+'/UserDashBoard/')
   // }
    accountdetailsByUserName(username: any):Observable<Account>{
-    return this.httpClient.get<Account>(this.apiServer+'/UserDashBoard/'+username)
+    return this.httpClient.get<Account>(this.apiServer+'/AccountDetails/'+username)
    }
 
   login(register:Personaldetails){
     return this.httpClient.post(this.apiServer + '/PersonalDetails/login/', JSON.stringify(register), this.httpOptions)
     
+  } 
+  adminlogin(adlogin:Personaldetails){
+    return this.httpClient.post(this.apiServer + '/AdminDetails/adminlogin/', JSON.stringify(adlogin), this.httpOptions) 
   } 
   GetId(name:string){
     return this.httpClient.get<number>(this.apiServer+'/LoanDetails/'+name);
@@ -88,12 +92,12 @@ export class PersonaldetailsService {
     return this.httpClient.get<IncomeDetails>(this.apiServer+'/LoanDetails/income/'+id);
    }
 
-   getrejected(){
-     return this.httpClient.get(this.apiServer+'/LoanDetails/rejected')
+   getrejected():Observable<DisplayDetails[]>{
+     return this.httpClient.get<DisplayDetails[]>(this.apiServer+'/LoanDetails/rejected')
    }
 
-   getapproved(){
-     return this.httpClient.get(this.apiServer+'/LoanDetails/approved')
+   getapproved():Observable<DisplayDetails[]>{
+     return this.httpClient.get<DisplayDetails[]>(this.apiServer+'/LoanDetails/approved')
    }
    trackLoan(applicationId:any){
     return this.httpClient.post(this.apiServer+'/LoanTracker/Track',JSON.stringify(applicationId),this.httpOptions)
